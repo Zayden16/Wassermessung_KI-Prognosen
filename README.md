@@ -15,7 +15,7 @@ Das Endprodukt soll ein Protoyp eines Pop-Up Fensters sein, welches durch den Au
 ### Projekt-Beschreibung:
 Das [WebGIS](https://map.geo.sz.ch) stellt zahlreiche Daten mit Koordinatenbezug dar. Viele der Daten sind eher statisch und werden nur einmal täglich (Nacht) oder bei Bedarf aktualisiert. Neu eingepflegte Daten werden dadurch erst am nächsten Tag ersichtlich. Ausserdem stellen die Werte nur die aktuelle Situation dar. Der dynamische Wandel der Werte über eine Periode kann heute nicht über das WebGIS nachverfolgt werden.
 Das Amt für Gewässer AFG betreibt Messstellen an Gewässer, die in einer höheren zeitlichen Auflösung über den Tag Daten liefern. Die zahlreichen Informationen werden in das WISKI-System, einer Datenbank, eingespiesen. Jedoch werden diese Daten noch nicht ausgewertet und dargestellt. Neben dem AFG gibt es noch andere Interessenten für die Darstellung von dynamischen Daten im GIS.
-Künstliche Intelligenz ist heutzutage in aller Munde und ein sehr mächtiges Tool. Aus Trainingsdaten kann eine KI-Applikation lernen, wie sich künftige Daten verhalten könnten. Dies könnte man beispielsweise für Prognosekarten im Bereich der Naturgefahren oder Klimaentwicklung nutzen. Die Forschung ist bereits daran, KI-Modelle zu entwickeln und optimieren wie z.B. der Artikel aus dem [Nature](https://www.nature.com/articles/s41586-024-07145-1) zeigt.
+Auch die [Naturgefahrenkarte]() ist ein statischer Layer, wobei die Berechnungen auf Wahrscheinlichkeiten von möglichen Szenarien basieren. Künstliche Intelligenz ist heutzutage in aller Munde und ein sehr mächtiges Tool. Aus Trainingsdaten kann eine KI-Applikation lernen, wie sich künftige Daten verhalten könnten und so die Karte dynamischer gestalten. Dies könnte man beispielsweise für Prognosekarten im Bereich der Naturgefahren oder Klimaentwicklung nutzen. Die Forschung ist bereits daran, KI-Modelle zu entwickeln und optimieren wie z.B. der Artikel aus dem [Nature](https://www.nature.com/articles/s41586-024-07145-1) zeigt. 
 
 ### Produkt: 
 Der Challenge Task besteht aus zwei Teilen. Der erste Teil ist die Darstellung der Messungen über einen Zeitraum. Der zweite Teil der Aufgabe ist die Entwicklung einer Prognosekarte, die die aktuelle Situation von Naturgefahren einschätzt. 
@@ -68,6 +68,8 @@ Aus bestehenden Messreihen (z.B. Temperatur, Niederschlagsmessungen, etc...) als
 #### Teil 2
 - Die Ergebniskarte im LV95-Koordinatensystem (EPSG: 2056) beschrieben (Must)
 - Die Daten werden in den PostGIS-Typischen Geometrien gespeichert (Polygone für Flächen und Linestring für Linien) (Must)
+- Die Daten werden gemäss [Geodatenmodell vom Bund](https://www.bafu.admin.ch/bafu/de/home/zustand/daten/geodatenmodelle/naturgefahren--geodatenmodelle.html) umgesetzt (Must). Falls Daten fehlen, können Dummy-Werte eingesetzt werden.
+- Die Gefahren werden in die [Stufen eingeteilt](https://map.geo.sz.ch/s/OjcW3X): erhebliche Gefährdung, mittlere Gefährdung, geringe Gefährdung, Restgefährdung (Must)
 
 ### Verfügbare Daten
 #### Teil 1
@@ -89,6 +91,11 @@ Mögliche Datensätze:
 - [Klimamessnetz - Tageswerte](https://opendata.swiss/de/dataset/klimamessnetz-tageswerte)
 - [Manuelle Schnee- und Niederschlagsmessstationen](https://opendata.swiss/de/dataset/manuelle-schnee-und-niederschlagsmessstationen)
 - [Messwerte Niederschlag, 10 min Summe](https://opendata.swiss/de/dataset/messwerte-niederschlag-10-min-summe)
+- [Naturgefahrenkarte Kt. SZ](https://data.sz.ch/explore/dataset/naturgefahrenkarte0/information/)
+
+Weitere Infos:
+- [Beschreibung Geodatenmodell nach Bund](https://www.bafu.admin.ch/bafu/de/home/zustand/daten/geodatenmodelle/naturgefahren--geodatenmodelle.html)
+- [Beschreibung Gefahrenstufen](https://www.naturgefahren.ch/home/umgang-mit-naturgefahren/hochwasser.html)
 
 ### Weitere Informationen 
 - Benötigte Hardware: keine besondere Hardware nötig
