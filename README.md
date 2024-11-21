@@ -24,6 +24,7 @@ Bei den Messstationen sind Links hinterlegt, die einen Request an das Backend se
 - Stationsinformation
 - aktuelle Messdaten (Text, aufbereitet)
 - Diagramme (Grafisch aufbereitet)
+  
 Für diese Challenge gibt es ein konkretes Beispiel, welches uns das Amt für Gewässer Kanton Schwyz zur Verfügung gestellt hat. Über eine Schnittstelle können dynamischen Daten einer bestimmten Messstation abgefragt werden. Es werden folgende Daten gemessen:
 - Wassertemperatur
 - pH-Wert
