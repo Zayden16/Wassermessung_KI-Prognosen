@@ -2,6 +2,69 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+export interface TimeSeriesListItem {
+  station_no: string;
+  station_id: string;
+  ts_id: string;
+  ts_name: string;
+  ts_type_name: string;
+  parametertype_name: string;
+  stationparameter_name: string;
+  coverage: string;
+  ts_unitname: string;
+  ts_unitsymbol: string;
+  ts_unitname_abs: string;
+  ts_unitsymbol_abs: string;
+}
+
+export interface StationListItem {
+  station_no: string;
+  station_id: string;
+  parametertype_name: string;
+  stationparameter_name: string;
+  station_latitude: number;
+  station_longitude: number;
+  site_name: string;
+  river_name: string;
+}
+
+export interface ParameterListItem {
+  station_no: string;
+  station_id: string;
+  station_name: string;
+  site_no: string;
+  site_id: string;
+  site_name: string;
+  stationparameter_id: string;
+  stationparameter_name: string;
+  stationparameter_no: string;
+  stationparameter_longname: string;
+  parametertype_id: string;
+  parametertype_name: string;
+  parametertype_longname: string;
+  parametertype_shortunitname: string;
+  parametertype_unitname: string;
+  ca_par: string;
+}
+
+export interface TimeSeriesValue {
+  Timestamp: string;
+  Value: number;
+  'Absolute Value': number;
+}
+
+export interface TimeSeriesValuesResponse {
+  metadata: {
+    station_id: string;
+    ts_id: string;
+    ts_name: string;
+    parametertype_name: string;
+    stationparameter_name: string;
+    ts_unitsymbol: string;
+  };
+  data: TimeSeriesValue[];
+}
+
 @Injectable({
   providedIn: 'root', // Makes the service available application-wide
 })
@@ -16,7 +79,7 @@ export class WiskiService {
   /**
    * Makes a POST request to fetch the time series list.
    */
-  getTimeSeriesList(): Observable<any> {
+  getTimeSeriesList(): Observable<TimeSeriesListItem[]> {
     const body = new HttpParams()
       .set('id', 'timeSeriesList')
       .set('datasource', '1')
@@ -31,20 +94,20 @@ export class WiskiService {
       .set('station_no', 'SZHM105,SZHM106,SZHM200,SZHM201,SZHM202,SZHM203')
       .set('kvp', 'true');
 
-    return this.http.post(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, { headers: this.headers });
   }
 
   /**
    * Makes a POST request to fetch the station list.
    */
-  getStationList(): Observable<any> {
+  getStationList(): Observable<StationListItem[]> {
     const body = new HttpParams()
       .set('id', 'getStationList')
       .set('datasource', '1')
       .set('service', 'kisters')
       .set('type', 'queryServices')
       .set('request', 'getStationList')
-      .set('format', 'csv')
+      .set('format', 'json')
       .set(
         'returnfields',
         'station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name'
@@ -52,20 +115,20 @@ export class WiskiService {
       .set('station_no', '*')
       .set('kvp', 'true');
 
-    return this.http.post(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<StationListItem[]>(this.baseUrl, body, { headers: this.headers });
   }
 
   /**
    * Makes a POST request to fetch the parameter list.
    */
-  getParameterList(): Observable<any> {
+  getParameterList(): Observable<ParameterListItem[]> {
     const body = new HttpParams()
       .set('id', 'getParameterList')
       .set('datasource', '1')
       .set('service', 'kisters')
       .set('type', 'queryServices')
       .set('request', 'getParameterList')
-      .set('format', 'csv')
+      .set('format', 'json')
       .set(
         'returnfields',
         'station_no,station_id,station_name,site_no,site_id,site_name,stationparameter_id,stationparameter_name,stationparameter_no,stationparameter_longname,parametertype_id,parametertype_name,parametertype_longname,parametertype_shortunitname,parametertype_unitname,ca_par'
@@ -73,7 +136,7 @@ export class WiskiService {
       .set('kvp', 'true')
       .set('station_name', '*');
 
-    return this.http.post(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<ParameterListItem[]>(this.baseUrl, body, { headers: this.headers });
   }
 
   /**
@@ -83,7 +146,7 @@ export class WiskiService {
     tsId: string,
     from: string,
     to: string
-  ): Observable<any> {
+  ): Observable<TimeSeriesValuesResponse> {
     const body = new HttpParams()
       .set('datasource', '1')
       .set('service', 'kisters')
@@ -100,6 +163,6 @@ export class WiskiService {
       .set('from', from)
       .set('to', to);
 
-    return this.http.post(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<TimeSeriesValuesResponse>(this.baseUrl, body, { headers: this.headers });
   }
 }
