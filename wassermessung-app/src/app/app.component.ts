@@ -1,20 +1,32 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
-import {WiskiService} from './wiski.service';
+import { MenuItem } from 'primeng/api';
+import { MenuModule } from 'primeng/menu';
+import { RouterModule } from '@angular/router';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [MenuModule, RouterModule, ButtonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'wassermessung-app';
-
-  constructor(private wiskiService: WiskiService) {
-    // Example usage
-    this.wiskiService.getTimeSeriesList().subscribe(data => {
-      console.log('Time Series List:', data);
-    });
-  }
+  items: MenuItem[] = [
+    {
+      label: 'Home',
+      icon: 'pi pi-home',
+      routerLink: ['/']
+    },
+    {
+      label: 'Stations',
+      icon: 'pi pi-map-marker',
+      routerLink: ['/stations']
+    },
+    {
+      label: 'Dashboard',
+      icon: 'pi pi-chart-bar',
+      routerLink: ['/dashboard']
+    }
+  ];
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {map, Observable} from 'rxjs';
 
 export interface TimeSeriesListItem {
   station_no: string;
@@ -96,6 +96,36 @@ export class WiskiService {
 
     return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, { headers: this.headers });
   }
+
+  /**
+   * Makes a POST request to fetch the station list and returns only the relevant station
+   */
+  getRelevantStations(): Observable<StationListItem[]> {
+  const desiredStations = ['SZHM105', 'SZHM106', 'SZHM200', 'SZHM201', 'SZHM202', 'SZHM203'];
+    const body = new HttpParams()
+      .set('id', 'getStationList')
+      .set('datasource', '1')
+      .set('service', 'kisters')
+      .set('type', 'queryServices')
+      .set('request', 'getStationList')
+      .set('format', 'json')
+      .set('returnfields', 'station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name')
+      .set('station_no', desiredStations.join(','))  // Filter at API level
+      .set('kvp', 'true');
+
+    return this.http.post<any[]>(this.baseUrl, body, { headers: this.headers })
+      .pipe(
+        map(response => response.slice(1).map(row => ({
+          station_no: row[0],
+          station_id: row[1],
+          parametertype_name: row[2],
+          stationparameter_name: row[3],
+          station_latitude: parseFloat(row[4]),
+          station_longitude: parseFloat(row[5]),
+          site_name: row[6],
+          river_name: row[7]
+        })))
+      );  }
 
   /**
    * Makes a POST request to fetch the station list.
