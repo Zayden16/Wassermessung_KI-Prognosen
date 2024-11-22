@@ -1,0 +1,9 @@
+﻿ZHM;station_id;station_name;parametertype_name;stationparameter_name;site_name;river_name;station_local_x;station_local_y
+SZHM105;501769;Steiner Aa, Sattel;Abfluss;Abfluss;Sattel;Steiner Aa;2690797.1;1214803.5
+SZHM105;501769;Steiner Aa, Sattel;Pegel;Pegel;Sattel;Steiner Aa;2690797.1;1214803.5
+SZHM106;501770;Sihl bei Studen, Unteriberg;Abfluss;Abfluss;Unteriberg;Sihl;2706294.8;1214912.9
+SZHM106;501770;Sihl bei Studen, Unteriberg;Pegel;Pegel;Unteriberg;Sihl;2706294.8;1214912.9
+SZHM200;501775;Ruosalperbach, Waldieggen;Abfluss;Abfluss;Unterschächen;Ruosalpbach;2706937.8;1196017.7
+SZHM201;501776;Muota, KW Sahli;Abfluss;Abfluss;Muotathal;Muota;2707128.8;1197241.7
+SZHM202;501777;Rätschtalerbach, Bisisthal (Vorder Seeberg) ;Abfluss;Abfluss;Muotathal;Rätschtalerbach;2705632.8;1200791.9
+SZHM203;501778;Muota im Bisisthal (Vorder Seeberg Brücke) ;Abfluss;Abfluss;Muotathal;Muota;2705603.1;1200895
