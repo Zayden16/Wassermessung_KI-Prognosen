@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {StationListItem, WiskiService} from '../wiski.service';
 import {StationDetailComponent} from '../station-detail/station-detail.component';
 import {NgForOf, NgIf} from '@angular/common';
@@ -13,7 +13,7 @@ import {NgForOf, NgIf} from '@angular/common';
   templateUrl: './station-picker.component.html',
   styleUrl: './station-picker.component.scss'
 })
-export class StationPickerComponent {
+export class StationPickerComponent implements OnInit{
   stationsList: StationListItem[] = [];
   selectedStation?: StationListItem;
 

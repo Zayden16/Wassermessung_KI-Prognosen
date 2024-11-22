@@ -1,8 +1,8 @@
-import { Component, Input, OnInit, ViewChild, ElementRef, PLATFORM_ID, Inject } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { TimeSeriesValuesResponse, WiskiService } from '../wiski.service';
-import { TimeScale, LinearScale } from 'chart.js';
+import {Component, Input, OnInit, ViewChild, ElementRef, PLATFORM_ID, Inject, OnChanges, SimpleChanges} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
+import {TimeSeriesValuesResponse, WiskiService} from '../wiski.service';
+import {TimeScale, LinearScale} from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
 @Component({
@@ -11,8 +11,8 @@ import 'chartjs-adapter-date-fns';
   standalone: true,
   imports: [ReactiveFormsModule]
 })
-export class TimeSeriesChartComponent implements OnInit {
-  @Input() tsId!: string;
+export class TimeSeriesChartComponent implements OnInit, OnChanges {
+  @Input() tsId: string;
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
 
   chart?: any;
@@ -24,16 +24,25 @@ export class TimeSeriesChartComponent implements OnInit {
   constructor(
     private wiskiService: WiskiService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['tsId'] && !changes['tsId'].firstChange) {
+      if (this.chart) {
+        this.loadData();
+      }
+    }
+  }
 
   async ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      const { Chart } = await import('chart.js/auto');
+      const {Chart} = await import('chart.js/auto');
       Chart.register(TimeScale, LinearScale);
       const ZoomPlugin = (await import('chartjs-plugin-zoom')).default;
       Chart.register(ZoomPlugin);
 
-      this.initChart(Chart);
+      await this.initChart(Chart);
       this.loadData();
     }
   }
@@ -107,6 +116,9 @@ export class TimeSeriesChartComponent implements OnInit {
     const to = this.dateForm.get('to')?.value;
 
     if (!from || !to || !this.chart) return;
+
+    this.chart.data.datasets[0].data = [];
+    this.chart.update();
 
     this.wiskiService.getTimeSeriesValues(this.tsId, from, to)
       .subscribe((response: TimeSeriesValuesResponse) => {

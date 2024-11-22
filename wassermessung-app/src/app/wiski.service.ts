@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 
 
@@ -21,8 +21,6 @@ export interface TimeSeriesListItem {
 export interface StationListItem {
   station_no: string;
   station_id: string;
-  parametertype_name: string;
-  stationparameter_name: string;
   station_latitude: number;
   station_longitude: number;
   site_name: string;
@@ -74,7 +72,9 @@ export class WiskiService {
     'Content-Type': 'application/x-www-form-urlencoded',
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
+
   /**
    * Makes a POST request to fetch the time series list.
    */
@@ -102,7 +102,7 @@ export class WiskiService {
    * Makes a POST request to fetch the station list and returns only the relevant station
    */
   getRelevantStations(): Observable<StationListItem[]> {
-  const desiredStations = ['SZHM105', 'SZHM106', 'SZHM200', 'SZHM201', 'SZHM202', 'SZHM203'];
+    const desiredStations = ['SZHM105', 'SZHM106', 'SZHM200', 'SZHM201', 'SZHM202', 'SZHM203'];
     const body = new HttpParams()
       .set('id', 'getStationList')
       .set('datasource', '1')
@@ -110,23 +110,22 @@ export class WiskiService {
       .set('type', 'queryServices')
       .set('request', 'getStationList')
       .set('format', 'json')
-      .set('returnfields', 'station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name')
+      .set('returnfields', 'station_no,station_id,station_latitude,station_longitude,site_name,river_name')
       .set('station_no', desiredStations.join(','))  // Filter at API level
       .set('kvp', 'true');
 
-    return this.http.post<any[]>(this.baseUrl, body, { headers: this.headers })
+    return this.http.post<any[]>(this.baseUrl, body, {headers: this.headers})
       .pipe(
         map(response => response.slice(1).map(row => ({
           station_no: row[0],
           station_id: row[1],
-          parametertype_name: row[2],
-          stationparameter_name: row[3],
-          station_latitude: parseFloat(row[4]),
-          station_longitude: parseFloat(row[5]),
-          site_name: row[6],
-          river_name: row[7]
+          station_latitude: parseFloat(row[2]),
+          station_longitude: parseFloat(row[3]),
+          site_name: row[4],
+          river_name: row[5]
         })))
-      );  }
+      );
+  }
 
   /**
    * Makes a POST request to fetch the station list.
@@ -141,12 +140,12 @@ export class WiskiService {
       .set('format', 'json')
       .set(
         'returnfields',
-        'station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name'
+        'station_no,station_id,station_latitude,station_longitude,site_name,river_name'
       )
       .set('station_no', '*')
       .set('kvp', 'true');
 
-    return this.http.post<StationListItem[]>(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<StationListItem[]>(this.baseUrl, body, {headers: this.headers});
   }
 
   /**
@@ -167,7 +166,7 @@ export class WiskiService {
       .set('kvp', 'true')
       .set('station_name', '*');
 
-    return this.http.post<ParameterListItem[]>(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<ParameterListItem[]>(this.baseUrl, body, {headers: this.headers});
   }
 
   /**
@@ -183,7 +182,7 @@ export class WiskiService {
       .set('service', 'kisters')
       .set('type', 'queryServices')
       .set('request', 'getTimeseriesValues')
-      .set('format', 'dajson')
+      .set('format', 'json')  // Assuming the format is 'json'
       .set('kvp', 'true')
       .set('dateformat', "yyyy-MM-dd'T'HH:mm:ssXXX")
       .set('metadata', 'true')
@@ -194,6 +193,22 @@ export class WiskiService {
       .set('from', from)
       .set('to', to);
 
-    return this.http.post<TimeSeriesValuesResponse>(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<TimeSeriesValuesResponse>(this.baseUrl, body, { headers: this.headers })
+      .pipe(
+        map(response => ({
+          metadata: response[0] as {
+            station_id: string;
+            ts_id: string;
+            ts_name: string;
+            parametertype_name: string;
+            stationparameter_name: string;
+            ts_unitsymbol: string;
+          },
+          data: (response[0].data as [string, number][]).map(item => ({
+            Timestamp: item[0],
+            Value: item[1]
+          }))
+        }))
+      );
   }
 }
