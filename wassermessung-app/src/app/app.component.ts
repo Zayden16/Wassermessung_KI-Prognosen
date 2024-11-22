@@ -3,6 +3,9 @@ import { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
+import {WiskiService} from './wiski.service';
+import {LineChartComponent} from './line-chart/line-chart.component';
+
 
 @Component({
   selector: 'app-root',

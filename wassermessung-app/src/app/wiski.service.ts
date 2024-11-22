@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 
+
 export interface TimeSeriesListItem {
   station_no: string;
   station_id: string;
@@ -50,7 +51,6 @@ export interface ParameterListItem {
 export interface TimeSeriesValue {
   Timestamp: string;
   Value: number;
-  'Absolute Value': number;
 }
 
 export interface TimeSeriesValuesResponse {
@@ -75,11 +75,10 @@ export class WiskiService {
   });
 
   constructor(private http: HttpClient) {}
-
   /**
    * Makes a POST request to fetch the time series list.
    */
-  getTimeSeriesList(): Observable<TimeSeriesListItem[]> {
+  getTimeSeriesList(station_no: String): Observable<TimeSeriesListItem[]> {
     const body = new HttpParams()
       .set('id', 'timeSeriesList')
       .set('datasource', '1')
@@ -91,7 +90,9 @@ export class WiskiService {
         'returnfields',
         'station_no,station_id,ts_id,ts_name,ts_type_name,parametertype_name,stationparameter_name,coverage,ts_unitname,ts_unitsymbol,ts_unitname_abs,ts_unitsymbol_abs'
       )
-      .set('station_no', 'SZHM105,SZHM106,SZHM200,SZHM201,SZHM202,SZHM203')
+      .set('station_no', station_no.toString())
+      .set('ts_name', 'Aperiodisch roh')
+      .set('parametertype_name', 'Abfluss')
       .set('kvp', 'true');
 
     return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, { headers: this.headers });
@@ -188,7 +189,7 @@ export class WiskiService {
       .set('metadata', 'true')
       .set('timezone', 'CET')
       .set('md_returnfields', 'station_id,ts_id,ts_name,parametertype_name,stationparameter_name,ts_unitsymbol')
-      .set('returnfields', 'Timestamp,Value,Absolute Value')
+      .set('returnfields', 'Timestamp,Value')
       .set('ts_id', tsId)
       .set('from', from)
       .set('to', to);
