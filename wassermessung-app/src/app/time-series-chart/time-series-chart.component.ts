@@ -56,6 +56,7 @@ export class TimeSeriesChartComponent implements OnInit, OnChanges {
           data: [],
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
+          pointRadius: 0,
           parsing: {
             xAxisKey: 'x',
             yAxisKey: 'y'
@@ -64,7 +65,7 @@ export class TimeSeriesChartComponent implements OnInit, OnChanges {
       },
       options: {
         responsive: true,
-        maintainAspectRatio: false,
+        maintainAspectRatio: true,
         plugins: {
           zoom: {
             pan: {
@@ -129,7 +130,7 @@ export class TimeSeriesChartComponent implements OnInit, OnChanges {
           x: item.Timestamp,
           y: item.Value
         }));
-        dataset.label = response.metadata.ts_name;
+        dataset.label = response.metadata.parametertype_name;
 
         this.chart.options.scales.y.title.text =
           `${response.metadata.parametertype_name} (${response.metadata.ts_unitsymbol})`;
