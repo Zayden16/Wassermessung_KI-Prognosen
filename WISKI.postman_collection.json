@@ -1,0 +1,655 @@
+{
+	"info": {
+		"_postman_id": "a082b0f1-488a-46a7-8e70-30e853eec90c",
+		"name": "WISKI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39736919"
+	},
+	"item": [
+		{
+			"name": "Get Time Series List",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.42.0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "timeSeriesList",
+							"type": "text"
+						},
+						{
+							"key": "datasource",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "service",
+							"value": "kisters",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "queryServices",
+							"type": "text"
+						},
+						{
+							"key": "request",
+							"value": "getTimeseriesList",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "objson",
+							"type": "text"
+						},
+						{
+							"key": "returnfields",
+							"value": "station_no,station_id,ts_id,ts_name,ts_type_name,parametertype_name,stationparameter_name,coverage,ts_unitname,ts_unitsymbol,ts_unitname_abs,ts_unitsymbol_abs",
+							"type": "text"
+						},
+						{
+							"key": "station_no",
+							"value": "SZHM105,SZHM106,SZHM200,SZHM201,SZHM202,SZHM203",
+							"type": "text"
+						},
+						{
+							"key": "kvp",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://kiwis.innetag.ch/KiWIS/KiWIS?",
+					"protocol": "https",
+					"host": [
+						"kiwis",
+						"innetag",
+						"ch"
+					],
+					"path": [
+						"KiWIS",
+						"KiWIS"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Station List",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.42.0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "getStationList",
+							"type": "text"
+						},
+						{
+							"key": "datasource",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "service",
+							"value": "kisters",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "queryServices",
+							"type": "text"
+						},
+						{
+							"key": "request",
+							"value": "getStationList",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "csv",
+							"type": "text"
+						},
+						{
+							"key": "returnfields",
+							"value": "station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name",
+							"type": "text"
+						},
+						{
+							"key": "station_no",
+							"value": "*",
+							"type": "text"
+						},
+						{
+							"key": "kvp",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://kiwis.innetag.ch/KiWIS/KiWIS?",
+					"protocol": "https",
+					"host": [
+						"kiwis",
+						"innetag",
+						"ch"
+					],
+					"path": [
+						"KiWIS",
+						"KiWIS"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Site List",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.42.0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "getStationList",
+							"type": "text"
+						},
+						{
+							"key": "datasource",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "service",
+							"value": "kisters",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "queryServices",
+							"type": "text"
+						},
+						{
+							"key": "request",
+							"value": "getStationList",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "csv",
+							"type": "text"
+						},
+						{
+							"key": "returnfields",
+							"value": "station_no,station_id,parametertype_name,stationparameter_name,station_latitude,station_longitude,site_name,river_name",
+							"type": "text"
+						},
+						{
+							"key": "station_no",
+							"value": "*",
+							"type": "text"
+						},
+						{
+							"key": "kvp",
+							"value": "true",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://kiwis.innetag.ch/KiWIS/KiWIS?",
+					"protocol": "https",
+					"host": [
+						"kiwis",
+						"innetag",
+						"ch"
+					],
+					"path": [
+						"KiWIS",
+						"KiWIS"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Parameter List",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.42.0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "id",
+							"value": "getParameterList",
+							"type": "text"
+						},
+						{
+							"key": "datasource",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "service",
+							"value": "kisters",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "queryServices",
+							"type": "text"
+						},
+						{
+							"key": "request",
+							"value": "getParameterList",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "csv",
+							"type": "text"
+						},
+						{
+							"key": "returnfields",
+							"value": "station_no,station_id,station_name,site_no,site_id,site_name,stationparameter_id,stationparameter_name,stationparameter_no,stationparameter_longname,parametertype_id,parametertype_name,parametertype_longname,parametertype_shortunitname,parametertype_unitname,ca_par",
+							"type": "text"
+						},
+						{
+							"key": "kvp",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "station_name",
+							"value": "*",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://kiwis.innetag.ch/KiWIS/KiWIS?",
+					"protocol": "https",
+					"host": [
+						"kiwis",
+						"innetag",
+						"ch"
+					],
+					"path": [
+						"KiWIS",
+						"KiWIS"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Time Series Values",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					},
+					{
+						"key": "Content-Length",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Host",
+						"value": "<calculated when request is sent>",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "User-Agent",
+						"value": "PostmanRuntime/7.42.0",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept",
+						"value": "*/*",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Accept-Encoding",
+						"value": "gzip, deflate, br",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "Connection",
+						"value": "keep-alive",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "datasource",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "service",
+							"value": "kisters",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "queryServices",
+							"type": "text"
+						},
+						{
+							"key": "request",
+							"value": "getTimeseriesValues",
+							"type": "text"
+						},
+						{
+							"key": "format",
+							"value": "dajson",
+							"type": "text"
+						},
+						{
+							"key": "kvp",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "dateformat",
+							"value": "yyyy-MM-dd'T'HH:mm:ssXXX",
+							"type": "text"
+						},
+						{
+							"key": "metadata",
+							"value": "true",
+							"type": "text"
+						},
+						{
+							"key": "timezone",
+							"value": "CET",
+							"type": "text"
+						},
+						{
+							"key": "md_returnfields",
+							"value": "station_id,ts_id,ts_name,parametertype_name,stationparameter_name,ts_unitsymbol",
+							"type": "text"
+						},
+						{
+							"key": "returnfields",
+							"value": "Timestamp,Value,Absolute Value",
+							"type": "text"
+						},
+						{
+							"key": "ts_id",
+							"value": "266621010,266966010",
+							"type": "text"
+						},
+						{
+							"key": "from",
+							"value": "2023-12-01",
+							"type": "text"
+						},
+						{
+							"key": "to",
+							"value": "2024-11-01",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://kiwis.innetag.ch/KiWIS/KiWIS?",
+					"protocol": "https",
+					"host": [
+						"kiwis",
+						"innetag",
+						"ch"
+					],
+					"path": [
+						"KiWIS",
+						"KiWIS"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
