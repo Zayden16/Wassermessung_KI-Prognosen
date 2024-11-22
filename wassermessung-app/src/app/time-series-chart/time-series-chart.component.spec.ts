@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LineChartComponent } from './line-chart.component';
+import { TimeSeriesChartComponent } from './time-series-chart.component';
 
-describe('LineChartComponent', () => {
-  let component: LineChartComponent;
-  let fixture: ComponentFixture<LineChartComponent>;
+describe('TimeSeriesChartComponent', () => {
+  let component: TimeSeriesChartComponent;
+  let fixture: ComponentFixture<TimeSeriesChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LineChartComponent]
+      imports: [TimeSeriesChartComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(LineChartComponent);
+    fixture = TestBed.createComponent(TimeSeriesChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

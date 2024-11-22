@@ -4,13 +4,13 @@ import { MenuModule } from 'primeng/menu';
 import { RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import {WiskiService} from './wiski.service';
-import {LineChartComponent} from './line-chart/line-chart.component';
+import {NgOptimizedImage} from '@angular/common';
 
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [MenuModule, RouterModule, ButtonModule],
+  imports: [MenuModule, RouterModule, ButtonModule, NgOptimizedImage],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
