@@ -97,6 +97,14 @@ Weitere Infos:
 - [Beschreibung Geodatenmodell nach Bund](https://www.bafu.admin.ch/bafu/de/home/zustand/daten/geodatenmodelle/naturgefahren--geodatenmodelle.html)
 - [Beschreibung Gefahrenstufen](https://www.naturgefahren.ch/home/umgang-mit-naturgefahren/hochwasser.html)
 
+#### aktuelle Messstationen Kt. SZ
+-	Stationsnummer: SZHM105, vorhanden sind Abfluss und Pegel 
+-	Stationsnummer: SZHM106, vorhanden sind Abfluss und Pegel 
+-	Stationsnummer: SZHM200, vorhanden ist Abfluss
+-	Stationsnummer: SZHM201, vorhanden ist Abfluss
+-	Stationsnummer: SZHM202, vorhanden ist Abfluss
+-	Stationsnummer: SZHM203, vorhanden ist Abfluss
+
 ### Weitere Informationen 
 - Benötigte Hardware: keine besondere Hardware nötig
 - Max. Anzahl Teammitglieder:
