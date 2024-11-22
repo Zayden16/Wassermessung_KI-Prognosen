@@ -1,0 +1,20 @@
+<p-card *ngIf="station">
+  <h2>{{station.site_name}} - {{station.river_name}}</h2>
+
+  <p-panel header="Station Details">
+    <div class="grid">
+      <div class="col-12 md:col-6">
+        <strong>Station No:</strong> {{station.station_no}}
+      </div>
+      <div class="col-12 md:col-6">
+        <strong>Station ID:</strong> {{station.station_id}}
+      </div>
+      <div class="col-12 md:col-6">
+        <strong>Parameter:</strong> {{station.parametertype_name}}
+      </div>
+      <div class="col-12">
+        <strong>Location:</strong> {{station.station_latitude}}, {{station.station_longitude}}
+      </div>
+    </div>
+  </p-panel>
+</p-card>

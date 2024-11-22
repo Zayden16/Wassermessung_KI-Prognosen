@@ -1,0 +1,19 @@
+// stations.component.scss
+.stations-layout {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 2rem;
+}
+
+.stations-list {
+  border-right: 1px solid #dee2e6;
+}
+
+li {
+  cursor: pointer;
+  padding: 0.5rem;
+
+  &.active {
+    background-color: #e9ecef;
+  }
+}
