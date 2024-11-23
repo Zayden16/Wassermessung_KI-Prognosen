@@ -42,7 +42,13 @@ export class StationDetailComponent implements OnInit, OnChanges {
             next: (timeSeries) => {
               if (timeSeries && timeSeries.length > 0) {
                 console.log(timeSeries)
-                this.timeSeriesId.push(timeSeries[0].ts_id);
+                this.wiskiService.getTimeSeriesValues(timeSeries[0].ts_id, this.dateForm.get('from')?.value, this.dateForm.get('to')?.value).subscribe({
+                  next: (timeSeriesValue) => {
+                    if (timeSeriesValue.data.length > 0) {
+                      this.timeSeriesId.push(timeSeries[0].ts_id);
+                    }
+                  }
+                })
               } else {
                 console.log("no data for station: " + this.station.station_no + " with paramname: " + this.parametertype_names[i] + " and " + ParameterType.AperiodischRoh)
               }
@@ -56,6 +62,7 @@ export class StationDetailComponent implements OnInit, OnChanges {
   }
 
   updateCharts() {
+    this.loadTimeSeries()
   }
 
   ngOnInit() {
