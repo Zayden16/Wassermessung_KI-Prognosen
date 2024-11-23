@@ -5,6 +5,8 @@ import {PanelModule} from 'primeng/panel';
 import {CommonModule} from '@angular/common';
 import {TimeSeriesChartComponent} from '../time-series-chart/time-series-chart.component';
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {ParameterType} from '../../model';
 
 @Component({
   selector: 'app-station-detail',
@@ -15,14 +17,14 @@ import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 export class StationDetailComponent implements OnInit, OnChanges {
   @Input() station!: StationListItem;
   timeSeriesId : string[]
-  parametertype_names = ["Abfluss", "Pegel", "Wassertemperatur"]
+  parametertype_names = [ParameterType.Abfluss, ParameterType.Pegel, ParameterType.Wassertemperatur, ParameterType.ElektrischeLeitfaehigkeit]
 
   dateForm = new FormGroup({
     from: new FormControl(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)),
     to: new FormControl(new Date().toISOString().slice(0, 16))
   });
 
-  constructor(private wiskiService: WiskiService) {
+  constructor(private wiskiService: WiskiService, private route: ActivatedRoute) {
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -42,7 +44,7 @@ export class StationDetailComponent implements OnInit, OnChanges {
                 console.log(timeSeries)
                 this.timeSeriesId.push(timeSeries[0].ts_id);
               } else {
-                console.log("no data for station: " + this.station.station_no + " with paramname: " + this.parametertype_names[i])
+                console.log("no data for station: " + this.station.station_no + " with paramname: " + this.parametertype_names[i] + " and " + ParameterType.AperiodischRoh)
               }
             }, error: () => {
               console.error("Error fetching time series for station " + this.station.station_no + " with paramname: " + this.parametertype_names[i])
@@ -57,6 +59,26 @@ export class StationDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      const stationNo = params.get('station_no');
+      if (stationNo) {
+        this.loadStationDetails(stationNo);
+      } else if (this.station) {
+        this.loadTimeSeries();
+      } else {
+        console.error("no station provided and no station_no in route")
+      }
+    })
     this.loadTimeSeries();
+  }
+
+  private loadStationDetails(stationNo: string) {
+    this.wiskiService.getStationByNo(stationNo).subscribe({
+      next: (station) => {
+        console.log("station: " + station[1])
+        this.station = station[0];
+        this.loadTimeSeries();
+      }
+    })
   }
 }

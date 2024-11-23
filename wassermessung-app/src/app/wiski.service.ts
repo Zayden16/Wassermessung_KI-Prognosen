@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
+import {ParameterType} from '../model';
 
 
 export interface TimeSeriesListItem {
@@ -91,11 +92,11 @@ export class WiskiService {
         'station_no,station_id,ts_id,ts_name,ts_type_name,parametertype_name,stationparameter_name,coverage,ts_unitname,ts_unitsymbol,ts_unitname_abs,ts_unitsymbol_abs'
       )
       .set('station_no', station_no.toString())
-      .set('ts_name', 'Aperiodisch roh')
+      .set('ts_name', ParameterType.AperiodischRoh)
       .set('parametertype_name', parametertype_name.toString())
       .set('kvp', 'true');
 
-    return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, { headers: this.headers });
+    return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, {headers: this.headers});
   }
 
   /**
@@ -193,7 +194,7 @@ export class WiskiService {
       .set('from', from)
       .set('to', to);
 
-    return this.http.post<TimeSeriesValuesResponse>(this.baseUrl, body, { headers: this.headers })
+    return this.http.post<TimeSeriesValuesResponse>(this.baseUrl, body, {headers: this.headers})
       .pipe(
         map(response => ({
           metadata: response[0] as {
@@ -211,4 +212,33 @@ export class WiskiService {
         }))
       );
   }
+
+  getStationByNo(station_no: String): Observable<StationListItem[]> {
+    const body = new HttpParams()
+      .set('id', 'getStationList')
+      .set('datasource', '1')
+      .set('service', 'kisters')
+      .set('type', 'queryServices')
+      .set('request', 'getStationList')
+      .set('format', 'json')
+      .set(
+        'returnfields',
+        'station_no,station_id,station_latitude,station_longitude,site_name,river_name'
+      )
+      .set('station_no', station_no.toString())
+      .set('kvp', 'true');
+
+    return this.http.post<StationListItem[]>(this.baseUrl, body, {headers: this.headers})
+      .pipe(
+        map(response => response.slice(1).map(row => ({
+          station_no: row[0],
+          station_id: row[1],
+          station_latitude: parseFloat(row[2]),
+          station_longitude: parseFloat(row[3]),
+          site_name: row[4],
+          river_name: row[5]
+        })))
+      );
+  }
+
 }
