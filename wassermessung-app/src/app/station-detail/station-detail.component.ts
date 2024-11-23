@@ -7,7 +7,6 @@ import {TimeSeriesChartComponent} from '../time-series-chart/time-series-chart.c
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ParameterType} from '../../model';
-import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-station-detail',
@@ -111,7 +110,12 @@ export class StationDetailComponent implements OnInit, OnChanges {
         });
 
         const blob = new Blob([csvData.join('\n')], { type: 'text/csv' });
-        saveAs(blob, 'time_series_data.csv');
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = 'time_series_data.csv';
+        link.click();
+        URL.revokeObjectURL(url);
       })
       .catch(error => {
         console.error('Error in Promise.all:', error);
