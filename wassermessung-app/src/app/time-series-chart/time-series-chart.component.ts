@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild, ElementRef, PLATFORM_ID, Inject, OnChanges, SimpleChanges} from '@angular/core';
 import {isPlatformBrowser} from '@angular/common';
-import {FormGroup, FormControl, ReactiveFormsModule} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 import {TimeSeriesValuesResponse, WiskiService} from '../wiski.service';
 import {TimeScale, LinearScale} from 'chart.js';
 import 'chartjs-adapter-date-fns';
@@ -12,14 +12,13 @@ import 'chartjs-adapter-date-fns';
   imports: [ReactiveFormsModule]
 })
 export class TimeSeriesChartComponent implements OnInit, OnChanges {
-  @Input() tsId: string;
+  @Input() tsId!: string;
+  @Input() from!: string;
+  @Input() to!: string;
   @ViewChild('chartCanvas') chartCanvas!: ElementRef;
 
   chart?: any;
-  dateForm = new FormGroup({
-    from: new FormControl(new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString().slice(0, 16)),
-    to: new FormControl(new Date().toISOString().slice(0, 16))
-  });
+
 
   constructor(
     private wiskiService: WiskiService,
@@ -28,7 +27,7 @@ export class TimeSeriesChartComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['tsId'] && !changes['tsId'].firstChange) {
+    if ((changes['tsId'] && !changes['tsId'].firstChange) || changes['from'] || changes['to']) {
       if (this.chart) {
         this.loadData();
       }
@@ -113,15 +112,13 @@ export class TimeSeriesChartComponent implements OnInit, OnChanges {
   }
 
   loadData() {
-    const from = this.dateForm.get('from')?.value;
-    const to = this.dateForm.get('to')?.value;
 
-    if (!from || !to || !this.chart) return;
+    if (!this.from || !this.to || !this.chart) return;
 
     this.chart.data.datasets[0].data = [];
     this.chart.update();
 
-    this.wiskiService.getTimeSeriesValues(this.tsId, from, to)
+    this.wiskiService.getTimeSeriesValues(this.tsId, this.from, this.to)
       .subscribe((response: TimeSeriesValuesResponse) => {
         if (!this.chart) return;
 

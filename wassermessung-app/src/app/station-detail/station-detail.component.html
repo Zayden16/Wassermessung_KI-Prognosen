@@ -1,19 +1,46 @@
 <p-card *ngIf="station">
-  <h2>{{station.site_name}} - {{station.river_name}}</h2>
+  <h2>{{ station.site_name }} - {{ station.river_name }}</h2>
 
   <p-panel header="Station Details">
     <div class="grid">
       <div class="col-12 md:col-6">
-        <strong>Station No:</strong> {{station.station_no}}
+        <strong>Station No:</strong> {{ station.station_no }}
       </div>
       <div class="col-12 md:col-6">
-        <strong>Station ID:</strong> {{station.station_id}}
+        <strong>Station ID:</strong> {{ station.station_id }}
       </div>
       <div class="col-12">
-        <strong>Location:</strong> {{station.station_latitude}}, {{station.station_longitude}}
+        <strong>Location:</strong> {{ station.station_latitude }}, {{ station.station_longitude }}
       </div>
     </div>
   </p-panel>
 
-  <app-time-series-chart *ngIf="timeSeriesId" [tsId]="timeSeriesId"></app-time-series-chart>
+  <!-- Zentraler DatePicker -->
+  <form [formGroup]="dateForm" class="my-4">
+    <div class="grid">
+      <div class="col-6">
+        <label for="from">From:</label>
+        <input id="from" type="datetime-local" formControlName="from" />
+      </div>
+      <div class="col-6">
+        <label for="to">To:</label>
+        <input id="to" type="datetime-local" formControlName="to" />
+      </div>
+    </div>
+    <button
+      type="button"
+      (click)="updateCharts()"
+      class="px-4 py-2 bg-blue-500 text-white rounded mt-4">
+      Update Charts
+    </button>
+  </form>
+
+  <!-- Time Series Charts -->
+  <div *ngFor="let id of timeSeriesId">
+    <app-time-series-chart
+      [tsId]="id"
+      [from]="dateForm.get('from')?.value"
+      [to]="dateForm.get('to')?.value">
+    </app-time-series-chart>
+  </div>
 </p-card>

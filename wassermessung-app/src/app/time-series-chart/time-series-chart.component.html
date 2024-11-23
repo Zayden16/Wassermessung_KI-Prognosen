@@ -1,28 +1,4 @@
 <div class="container mx-auto p-4">
-  <form [formGroup]="dateForm" class="mb-4 flex gap-4">
-    <div>
-      <label for="from" class="block text-sm font-medium mb-1">From:</label>
-      <input
-        type="datetime-local"
-        id="from"
-        formControlName="from"
-        class="border rounded p-2">
-    </div>
-    <div>
-      <label for="to" class="block text-sm font-medium mb-1">To:</label>
-      <input
-        type="datetime-local"
-        id="to"
-        formControlName="to"
-        class="border rounded p-2">
-    </div>
-    <button
-      (click)="loadData()"
-      class="px-4 py-2 bg-blue-500 text-white rounded self-end">
-      Update
-    </button>
-  </form>
-
   <div class="relative h-[500px]">
     <canvas #chartCanvas></canvas>
   </div>

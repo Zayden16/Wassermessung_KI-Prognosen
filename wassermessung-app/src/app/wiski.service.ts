@@ -78,7 +78,7 @@ export class WiskiService {
   /**
    * Makes a POST request to fetch the time series list.
    */
-  getTimeSeriesList(station_no: String): Observable<TimeSeriesListItem[]> {
+  getTimeSeriesList(station_no: String, parametertype_name: String): Observable<TimeSeriesListItem[]> {
     const body = new HttpParams()
       .set('id', 'timeSeriesList')
       .set('datasource', '1')
@@ -92,7 +92,7 @@ export class WiskiService {
       )
       .set('station_no', station_no.toString())
       .set('ts_name', 'Aperiodisch roh')
-      .set('parametertype_name', 'Abfluss')
+      .set('parametertype_name', parametertype_name.toString())
       .set('kvp', 'true');
 
     return this.http.post<TimeSeriesListItem[]>(this.baseUrl, body, { headers: this.headers });
@@ -102,7 +102,7 @@ export class WiskiService {
    * Makes a POST request to fetch the station list and returns only the relevant station
    */
   getRelevantStations(): Observable<StationListItem[]> {
-    const desiredStations = ['SZHM105', 'SZHM106', 'SZHM200', 'SZHM201', 'SZHM202', 'SZHM203'];
+    const desiredStations = ['SZHM105', 'SZHM106', 'SZHM200', 'SZHM201', 'SZHM202', 'SZHM203', 'LUPQ53'];
     const body = new HttpParams()
       .set('id', 'getStationList')
       .set('datasource', '1')
