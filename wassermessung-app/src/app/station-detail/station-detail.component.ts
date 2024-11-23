@@ -89,36 +89,21 @@ export class StationDetailComponent implements OnInit, OnChanges {
       console.error('No time series IDs available.');
       return;
     }
-
-    const requests = this.timeSeriesId.map(id =>
-      this.wiskiService.getTimeSeriesValues(id, this.dateForm.get('from')?.value, this.dateForm.get('to')?.value).toPromise()
-    );
-
-    console.log('API requests:', requests);
-
-    Promise.all(requests)
-      .then((responses: any[]) => {
-        console.log('API responses:', responses);
-
-        responses.forEach(response => {
-          if (response?.data) {
-            console.log('Response data:', response.data);
-            response.data.forEach((item: { Timestamp: string, Value: number }) => {
+    this.timeSeriesId.forEach(id => {
+        this.wiskiService.getTimeSeriesValues(id, this.dateForm.get('from')?.value, this.dateForm.get('to')?.value).subscribe(params => {
+          if (params?.data) {
+            params.data.forEach((item: { Timestamp: string, Value: number }) => {
               csvData.push(`${item.Timestamp},${item.Value}`);
             });
           }
-        });
-
-        const blob = new Blob([csvData.join('\n')], { type: 'text/csv' });
+      const blob = new Blob([csvData.join('\n')], { type: 'text/csv' });
         const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = 'time_series_data.csv';
-        link.click();
-        URL.revokeObjectURL(url);
-      })
-      .catch(error => {
-        console.error('Error in Promise.all:', error);
-      });
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = 'time_series_data_for_' + params.metadata.parametertype_name + '.csv';
+          link.click();
+          URL.revokeObjectURL(url);
+        });
+    });
   }
 }
