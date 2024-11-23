@@ -7,6 +7,7 @@ import {TimeSeriesChartComponent} from '../time-series-chart/time-series-chart.c
 import {FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ParameterType} from '../../model';
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-station-detail',
@@ -80,5 +81,40 @@ export class StationDetailComponent implements OnInit, OnChanges {
         this.loadTimeSeries();
       }
     })
+  }
+
+  downloadCSV() {
+    const csvData: string[] = ['Timestamp,Value'];
+
+    if (!this.timeSeriesId || this.timeSeriesId.length === 0) {
+      console.error('No time series IDs available.');
+      return;
+    }
+
+    const requests = this.timeSeriesId.map(id =>
+      this.wiskiService.getTimeSeriesValues(id, this.dateForm.get('from')?.value, this.dateForm.get('to')?.value).toPromise()
+    );
+
+    console.log('API requests:', requests);
+
+    Promise.all(requests)
+      .then((responses: any[]) => {
+        console.log('API responses:', responses);
+
+        responses.forEach(response => {
+          if (response?.data) {
+            console.log('Response data:', response.data);
+            response.data.forEach((item: { Timestamp: string, Value: number }) => {
+              csvData.push(`${item.Timestamp},${item.Value}`);
+            });
+          }
+        });
+
+        const blob = new Blob([csvData.join('\n')], { type: 'text/csv' });
+        saveAs(blob, 'time_series_data.csv');
+      })
+      .catch(error => {
+        console.error('Error in Promise.all:', error);
+      });
   }
 }

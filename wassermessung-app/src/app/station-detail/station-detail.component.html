@@ -15,14 +15,21 @@
     </div>
   </p-panel>
 
+  <button
+    type="button"
+    (click)="downloadCSV()"
+    class="px-4 py-2 bg-green-500 text-white rounded button-spacing">
+    Download CSV
+  </button>
+
   <!-- Zentraler DatePicker -->
   <form [formGroup]="dateForm" class="my-4">
     <div class="grid">
-      <div class="col-6">
+      <div class="col-6 form-spacing">
         <label for="from">From:</label>
         <input id="from" type="datetime-local" formControlName="from" />
       </div>
-      <div class="col-6">
+      <div class="col-6 form-spacing">
         <label for="to">To:</label>
         <input id="to" type="datetime-local" formControlName="to" />
       </div>
@@ -30,7 +37,7 @@
     <button
       type="button"
       (click)="updateCharts()"
-      class="px-4 py-2 bg-blue-500 text-white rounded mt-4">
+      class="px-4 py-2 bg-blue-500 text-white rounded button-spacing">
       Update Charts
     </button>
   </form>
